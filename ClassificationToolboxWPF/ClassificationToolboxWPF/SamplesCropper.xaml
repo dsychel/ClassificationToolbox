@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.SamplesCropper"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" PreviewMouseWheel="UserControl_PreviewMouseWheel" MouseWheel="ImageScrollViewer_MouseWheel">
+    <Grid x:Name="mainGrid" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="370"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Label Content="Image:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <Label Content="Save In:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11" Grid.Row="1"/>
+        <TextBox x:Name="imageToCropTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <TextBox x:Name="saveSamplesInTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <CheckBox x:Name="loadCoordinatesCheckBox" Grid.Row="2" Grid.ColumnSpan="2" Content="Load Coordinates" Margin = "3,7,5,0" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="True"/>
+        <Grid Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="24"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button x:Name="selectImageButton" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Click="SelectImageButton_Click" Margin="0,2,0,0">
+                <Button.Content>
+                    <Image Width="20" Height="20" Source="Images/browse20.png"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="prevImageButton" Grid.Column="0" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Click="PrevImageButton_Click" Margin="0,2,0,0" IsEnabled="False">
+                <Button.Content>
+                    <Image Width="20" Height="20" Source="Images/left.png"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="nextImageButton" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Click="NextImageButton_Click" Margin="0,2,0,0" IsEnabled="False">
+                <Button.Content>
+                    <Image Width="20" Height="20" Source="Images/right.png"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+        <Button x:Name="selectSaveFolderButton" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="SelectSaveFolderButton_Click" Margin="0,2,0,0">
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="saveCoordinatesButton" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Grid.Row="8" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="SaveCoordinatesButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/save24.png"/>
+                    <TextBlock Text="Save Coordinates" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button x:Name="cropButton" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="8" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="CropButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/crop24.png"/>
+                    <TextBlock Text="Crop Samples" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <local:ImageFileTypeSelector x:Name="saveSettings" EnableImage="True" HorizontalAlignment="Right" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Stretch" FontSize="11" FontWeight="Bold" Width="550" Margin="0,0,0,3"/>
+        <Border x:Name="imageBorder" BorderThickness="1" BorderBrush="#FF000000"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="4"  Margin="1,12, 1, 4" SizeChanged="ImageBorder_SizeChanged" >
+            <ScrollViewer x:Name="imageScrollViewer" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" MouseWheel="ImageScrollViewer_MouseWheel">
+                <Image x:Name="imageToCropPictureBox" MouseMove="ImageToCropPictureBox_MouseMove" MouseUp="ImageToCropPictureBox_MouseUp"/>
+            </ScrollViewer>
+        </Border>
+        <GroupBox Grid.ColumnSpan="2" Grid.Column="4" Header="Mode:" HorizontalAlignment="Stretch" Margin="0,3" Grid.Row="3" VerticalAlignment="Stretch" FontSize="11" FontWeight="Bold" >
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="cropSelectedRadioButton" Content="Crop Selected" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="CropSelectedRadioButton_Checked"/>
+                <RadioButton x:Name="excludeSelectedRadioButton" Grid.Column="1" Content="Exclude Selected" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="ExcludeSelectedRadioButton_Checked" IsChecked="True"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.ColumnSpan="2" Grid.Column="4" Header="Output:" HorizontalAlignment="Stretch" Margin="0,3" Grid.Row="4" VerticalAlignment="Stretch" FontSize="11" FontWeight="Bold">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="reiszeIfGreaterRadioButton" Grid.Row="2" Content="If Greater" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" IsChecked="True"/>
+                <RadioButton x:Name="reiszeAlwaysRadioButton" Grid.Column="1" Grid.Row="2" Content="Always" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal"/>
+                <Label Content="Selection size:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" Margin="-3,0,0,0"/>
+                <CheckBox x:Name="resizeCheckBox" Content="Resize to:" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+                <local:NumericUpDown x:Name="windowToCropSizeNumericUpDown" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,3,0,3" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" Minimum="40" Maximum="1000" Value="48" Increment="2" DecimalPlaces="0" FontWeight="Normal" ValueChanged="WindowToCropSizeNumericUpDown_ValueChanged"/>
+                <local:NumericUpDown x:Name="resizeNumericUpDown" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,3,0,3" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" Minimum="48" Maximum="1000" Value="48" Increment="2" DecimalPlaces="0" FontWeight="Normal"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="cropSettingsGroupBox" Grid.ColumnSpan="2" Grid.Column="4" Header="Crop settings:" HorizontalAlignment="Stretch" Margin="0,3" Grid.Row="5" VerticalAlignment="Stretch" FontSize="11" FontWeight="Bold">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Probability:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" Margin="-3,0,0,0"/>
+                <Label Content="Intersection:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" Margin="-3,0,0,0" Grid.Row="1"/>
+                <Label Content="Step:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" Margin="-3,0,0,0" Grid.Row="2"/>
+                <local:NumericUpDown x:Name="cropProbabiltyNumericUpDown" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,3,0,3" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right"  Minimum="0" Maximum="1" DecimalPlaces="4" Value="0.0500" Increment="0.05"  FontWeight="Normal"/>
+                <local:NumericUpDown x:Name="cropIntersectioNumericUpDown" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,3,0,3" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" Minimum="0" DecimalPlaces="4" Maximum="1" Value="0.1000" Increment="0.05" FontWeight="Normal"/>
+                <local:NumericUpDown x:Name="cropStepNumericUpDown" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,3,0,3" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" Minimum="0" Maximum="1" DecimalPlaces="4" Value="0.0010" Increment="0.05" FontWeight="Normal"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="cropModeListGroupBox" Grid.ColumnSpan="2" Grid.Column="4" Header="Samples To Crop:" HorizontalAlignment="Stretch" Margin="0,3" Grid.Row="6" VerticalAlignment="Stretch" FontSize="11" FontWeight="Bold">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="24"/>
+                </Grid.RowDefinitions>
+                <ListBox x:Name="cropExcludeListBox" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" KeyDown="CropExcludeListBox_KeyDown" />
+                <Button x:Name="loadCoordsButton" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="LoadCoordsButton_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Width="145">
+                            <TextBlock Text="Load Cooridnates" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="25,0,0,0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <TextBox x:Name="winCoordsTextBox" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="8" Text="X: 0, Y: 0" TextAlignment="Center" VerticalContentAlignment="Center" FontSize="10" BorderThickness="0"/>
+    </Grid>
+</UserControl>

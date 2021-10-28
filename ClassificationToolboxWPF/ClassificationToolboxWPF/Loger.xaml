@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.Loger"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="saveLogButton" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="SaveLogButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/log24.png"/>
+                    <TextBlock Text="Save Log" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <RichTextBox x:Name="eventLog" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True" >
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</UserControl>

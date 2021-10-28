@@ -1,0 +1,410 @@
+﻿<Window x:Class="ClassificationToolboxWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassificationToolboxWPF"
+        mc:Ignorable="d"
+        Title="Classification Toolbox" Icon="classificationToolbox.ico" Width="1200" Height="720" MinWidth="1200" MinHeight="720" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20">
+            </RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Menu HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <MenuItem Header="File">
+                <MenuItem Header="Save Log" Name="saveLog" Click="SaveLog_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/log16.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Parallelity Settings" Name="parallelitySettings" Click="ParallelitySettings_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/settings16.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Restore Defaults (will cause application restart)" Name="restoreDefault" Click="RestoreDefault_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/restore16.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Application">
+                <MenuItem Header="Stop Current Work" Name="stopCurrentWork" Click="StopCurrentWork_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="Images/stop16.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Restart Application" Name="restartApplication" Click="RestartApplication_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/restart16.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="LUTs">
+                <MenuItem Header="PFMM">
+                    <MenuItem Header="Load / Generate LUT" Name="loadGenerateLUTpfmm" Click="LoadGenerateLUTpfmm_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Images/load16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Unload LUT" Name="unloadLUTpfmm" Click="UnloadLUTpfmm_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="Images/unload16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Zernike">
+                    <MenuItem Header="Load / Generate LUT" Name="loadGenerateLUTzernike" Click="LoadGenerateLUTzernike_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Images/load16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Unload LUT" Name="unloadLUTzernike" Click="UnloadLUTzernike_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Images/unload16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Zernike Partitioned">
+                    <MenuItem Header="Load / Generate LUT" Name="loadGenerateLUTzernikeFP" Click="LoadGenerateLUTzernikeFP_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Images/load16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Unload LUT" Name="unloadLUTzernikeFP" Click="UnloadLUTzernikeFP_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Images/unload16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help"/>
+        </Menu>
+        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="108" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Name="statusLabel" Text="Status:" />
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="4">
+                <ProgressBar Name="progressBar" Value="0" Maximum="100" Width="100" Height="12" Visibility="Hidden"/>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabStripPlacement="Left" Margin ="0" Padding="0">
+            <TabItem Margin ="0" Padding="0">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical"  Margin="3">
+                        <Image Width="48" Height="48" Source="Images/conversion48.png"/>
+                        <TextBlock Text="Image" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Processing" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFFFFFFF">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="271*"/>
+                        <RowDefinition Height="376*"/>
+                    </Grid.RowDefinitions>
+                    <TabControl  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2">
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/conversion32.png" />
+                                    <TextBlock Text="Grayscale Conversion" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="#FFFFFFFF">
+                                <local:GrayscaleConverter x:Name="grayscaleConverter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ConversionStarted="WorkStarted" ConversionProgressing="WorkProgressing" ConversionCompleted="WorkCompleted" Margin="0"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/crop32.png"/>
+                                    <TextBlock Text="Crop Samples" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="#FFFFFFFF">
+                                <local:SamplesCropper x:Name="cropSamplesControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CropingStarted="WorkStarted" CropingCompletion="WorkCompleted"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/batchCrop32.png"/>
+                                    <TextBlock Text="Batch Crop Samples" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="#FFFFFFFF">
+                                <local:BatchSamplesCropper x:Name="batchCropSamplesControl" SampleCroppingStarted="WorkStarted" SampleCroppingProgressing="WorkProgressing" SampleCroppingCompletion="WorkCompleted"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/preview32_2.png"/>
+                                    <TextBlock Text="Preview Samples" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="#FFFFFFFF">
+                                <local:SamplePreviewer x:Name="samplePreviewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Margin="0" Padding="0">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" Margin="3">
+                        <Image Width="48" Height="48" Source="Images/extract48.png" Margin="1"/>
+                        <TextBlock Text="Extraction" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFFFFFFF">
+                    <TabControl  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3"  Width="142">
+                                    <Image Width="32" Height="32" Source="Images/extract32.png"/>
+                                    <TextBlock Text="Extraction" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:FeatureExtractor x:Name="extractionControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ExtractionCompleted="WorkCompleted" ExtractionProgressing="WorkProgressing" ExtractionStarted="WorkStarted"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3"  Width="142">
+                                    <Image Width="32" Height="32" Source="Images/extract32.png"/>
+                                    <TextBlock Text="Extract From Images" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:FeatureExtractorImages x:Name="extractionImageControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ExtractionCompleted="WorkCompleted" ExtractionProgressing="WorkProgressing" ExtractionStarted="WorkStarted"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/batchExtract32.png"/>
+                                    <TextBlock Text="Batch Extraction" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:BatchFeatureExtractor x:Name="batchExtractionControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ExtractionCompleted="WorkCompleted" ExtractionProgressing="WorkProgressing" ExtractionStarted="WorkStarted"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/postprocessing32.png"/>
+                                    <TextBlock Text="Postprocessing" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="#FFFFFFFF">
+                                <local:FeaturesPostprocessor x:Name="featurePostprocessingControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/detection32.png"/>
+                                    <TextBlock Text="View and Compare" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="#FFFFFFFF">
+                                <local:FeaturesViewer x:Name="viewAndCompareFeaturesControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="180">
+                                    <Image Width="32" Height="32" Source="Images/results32.png"/>
+                                    <TextBlock Text="Zernike Extractors Comparison" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:ZernikeComparsionControl x:Name="zernikeComparsionControl" ComparisonStarted="WorkStarted" ComparisonProgressing="WorkProgressing" ComparisonCompletion="WorkCompleted" ComparisonStatusChanged="StatusChanged"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Margin ="0" Padding="0">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical"  Margin="3">
+                        <Image Width="48" Height="48" Source="Images/train48.png"/>
+                        <TextBlock Text="Classifier" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Training" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFFFFFFF">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="270*"/>
+                        <RowDefinition Height="377*"/>
+                    </Grid.RowDefinitions>
+                    <TabControl  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2">
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/settings32.png"/>
+                                    <TextBlock Text="Training" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:ClassifierTrainer x:Name="trainClassifierControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TrainingCompletion="WorkCompleted" TrainingProgressing="WorkProgressing" TrainingStarted="WorkStarted"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/results32.png"/>
+                                    <TextBlock Text="Testing" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:ClassifierTester x:Name="testClassifierControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  TestingCompletion="WorkCompleted" TestingStarted="WorkStarted" TestingProgressing="WorkProgressing"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/results32.png"/>
+                                    <TextBlock Text="Batch Testing" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:BatchClassifierTester x:Name="batchTesterControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  TestingCompletion="WorkCompleted" TestingProgressing="WorkProgressing" TestingStarted="WorkStarted" TestingStatusChanged="StatusChanged"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/detection32.png"/>
+                                    <TextBlock Text="Detection Time Testing" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:ClassifierDetectionTimeTester x:Name="testClassifierTimeControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  TestingCompletion="WorkCompleted" TestingProgressing="WorkProgressing" TestingStarted="WorkStarted" ClassifierLoaded="TestClassifierTimeControl_ClassifierLoaded" ExtractorLoaded="TestClassifierTimeControl_ExtractorLoaded"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="180">
+                                    <Image Width="32" Height="32" Source="Images/mdetection32.png"/>
+                                    <TextBlock Text="Batch Detection Time Testing" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:ClassifierBatchDetectionTimeTester x:Name="testBatchClassifierTimeControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TestingCompletion="WorkCompleted" TestingProgressing="WorkProgressing" TestingStarted="WorkStarted" ClassifierLoaded="BatchTestClassifierTimeControl_ClassifierLoaded" ExtractorLoaded="BatchTestClassifierTimeControl_ExtractorLoaded" TestingStatusChanged="StatusChanged"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Margin ="0" Padding="0">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical"  Margin="3">
+                        <Image Width="48" Height="48" Source="Images/detection48.png"/>
+                        <TextBlock Text="Detection" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFFFFFFF">
+                    <TabControl  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/detection32.png"/>
+                                    <TextBlock Text="Single Image" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:DetectionControl x:Name="detectionControl" DetectionStarted="WorkStarted" DetectionCompletion="WorkCompleted" ClassifierLoaded="DetectionControl_ClassifierLoaded" ExtractorLoaded="DetectionControl_ExtractorLoaded"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/mdetection32.png"/>
+                                    <TextBlock Text="Batch Detection" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:BatchDetectionControl x:Name="batchDetectionControl" DetectionStarted="WorkStarted" DetectionProgressing="WorkProgressing" DetectionCompletion="WorkCompleted" ClassifierLoaded="BatchDetectionControl_ClassifierLoaded" ExtractorLoaded="BatchDetectionControl_ExtractorLoaded"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/prescreeaner32.png"/>
+                                    <TextBlock Text="Prescreeaning" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem Margin ="0" Padding="0">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal"  Margin="3" Width="150">
+                                    <Image Width="32" Height="32" Source="Images/results32.png"/>
+                                    <TextBlock Text="Parse Result" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <local:BatchDetectionResultParser x:Name="batchDetectionResultControl"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Margin ="0" Padding="0">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical"  Margin="3">
+                        <Image Width="48" Height="48" Source="Images/log48.png"/>
+                        <TextBlock Text="Event Log" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFFFFFFF">
+                    <local:Loger x:Name="eventLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </Grid>
+            </TabItem>
+            <TabItem Margin ="0" Padding="0">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical"  Margin="3">
+                        <Image Width="48" Height="48" Source="Images/support48.png"/>
+                        <TextBlock Text="About" Foreground="Black" FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFFFFFFF" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="Images/WI_1.jpg" Stretch="Uniform"/>
+                    <Label x:Name="labelProductName" Grid.Column="1"  HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Content="Product Name" FontWeight="Bold" FontSize="14"/>
+                    <Label x:Name="labelCompanyName" Grid.Column="1"  HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Content="Company Name"/>
+                    <TextBox x:Name="textBoxDescription" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch"  TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Margin="3"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

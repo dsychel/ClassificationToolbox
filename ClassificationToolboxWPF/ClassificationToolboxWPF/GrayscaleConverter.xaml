@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.GrayscaleConverter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="82"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Images Folder:" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <Label Content="Output Folder:" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11" Grid.Row="2"/>
+        <TextBox x:Name="imageFolderTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <TextBox x:Name="outputFolderTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="3" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="selectImageFolderButton" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="SelectImageFolderButton_Click">
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="selectOutputFolderButton" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Click="SelectOutputFolderButton_Click">
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Canvas Margin="0,5,0,3" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="280">
+            <CheckBox x:Name="includeSubfolderCheckBox" Content="Include Subfolder" Margin = "3,7,5,0" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="True" Checked="IncludeSubfolderCheckBox_CheckedChange" Unchecked="IncludeSubfolderCheckBox_CheckedChange"/>
+            <CheckBox x:Name="keepFolderStructureCheckBox" Content="Keep Folder Structure" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="True" Canvas.Left="125" Canvas.Top="7"/>
+        </Canvas>
+        <TextBox x:Name="statisticTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.ColumnSpan="2" TextWrapping="Wrap" IsReadOnly="True" Text="Conversion to grayscale binary file." Margin="3,0,0,0" FontSize="11" Background="#FFE4E4E4"/>
+        <CheckBox x:Name="shutdownCheckBox" Grid.Row="6" Content="Shutdown after Completion" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="False" VerticalAlignment="Bottom" Margin="0,0,0,1"/>
+        <Button x:Name="convertImagesButton" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="6" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="ConvertImagesButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/conversion24.png"/>
+                    <TextBlock Text="Convert Images" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <local:ImageFileTypeSelector x:Name="conversionSaveSettings" EnableImage="True" HorizontalAlignment="Right" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Stretch" FontSize="11" FontWeight="Bold" Width="550" Margin="0,5,0,3"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.FeatureExtractorImages"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+              d:DesignHeight="600" d:DesignWidth="1200" Background="White">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="390"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Images:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <Label Content="Save As:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11" Grid.Row="1"/>
+        <TextBox x:Name="imagesFolderTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <TextBox x:Name="featureSaveAsTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="selectImagesFolderButton" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Click="SelectImagesFolderButton_Click" Margin="0,2,0,0">
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="selectSaveFolderButton" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="SelectFeatureFileButton_Click" Margin="0,2,0,0">
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <CheckBox x:Name="includeSubfolderCheckBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Include Subfolder" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="True" Checked="IncludeSubfolderCheckBox_Checked" Unchecked="IncludeSubfolderCheckBox_Checked"/>
+        <GroupBox Header="Mode:" Margin="0,5,3 5" FontSize="11" FontWeight="Bold"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="cropRandomRadioButton" Content="Random" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="CropRandomRadioButton_Checked"/>
+                <RadioButton x:Name="cropRandomPKRadioButton" Grid.Row="1" Content="Random (PK)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="CropRandomPKRadioButton_Checked" IsEnabled="False"/>
+                <RadioButton x:Name="cropWithProbabilityRadioButton" Grid.Row="2" Content="With Probability" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="CropWithProbabilityRadioButton_Checked" IsEnabled="False"/>
+                <RadioButton x:Name="cropAtCoordinatesRadioButton" Grid.Row="3" Content="At Coordinate (req .txt file)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="CropAtCoordinatesRadioButton_Checked" IsChecked="True"/>
+                <RadioButton x:Name="cropHardNegativesRadioButton" Grid.Row="4" Content="Hard Negatives (req. .txt file)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Checked="CropHardNegativesRadioButton_Checked"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="cropSettingsGroupBox" Header="Crop Settings:" Margin="0,5,3 5" FontSize="11" FontWeight="Bold"  Grid.Row="3" Grid.Column="2">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="minimumLabel" Content="Minimum:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"  Visibility="Hidden"/>
+                <Label x:Name="scalesLabel" Content="Scales:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"  Visibility="Hidden"/>
+                <Grid Grid.Column="1"  Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="45"/>
+                    </Grid.ColumnDefinitions>
+                    <local:NumericUpDown x:Name="minNumericUpDown" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="48" Maximum="10000" Value="48" Margin="0,3,0,3"  Visibility="Hidden"/>
+                    <ComboBox x:Name="windowSizeUnitComboBox" Grid.Column="1" Margin="0,3,3,3" FontWeight="Normal" FontSize="10" SelectedIndex="0" SelectionChanged="WindowSizeUnitComboBox_SelectionChanged"  Visibility="Hidden">
+                        <ComboBoxItem Name="pxSizeComboBoxItem">px</ComboBoxItem>
+                        <ComboBoxItem Name="percetnSizeComboBoxItem">%</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <local:NumericUpDown x:Name="scalesNumericUpDown" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="30" Value="5" Margin="0,3,3,3" Visibility="Hidden"/>
+
+                <Label x:Name="minimumWindowLabel" Content="Minimum:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10" Visibility="Visible"/>
+                <local:NumericUpDown x:Name="minimumWindowNumericUpDown" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="20" Maximum="1000" Value="48" Margin="0,3,3,3" Visibility="Visible"/>
+                <Label x:Name="maximumWindowLabel" Content="Maximum:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10" Visibility="Visible"/>
+                <local:NumericUpDown x:Name="maximumWindowNumericUpDown" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="20" Maximum="1000" Value="200" Margin="0,3,3,3" Visibility="Visible"/>
+
+                <Label x:Name="classLabel" Content="Class:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10" Visibility="Visible"/>
+                <local:NumericUpDown x:Name="classNumericUpDown" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="-1" Maximum="1" Value="1" Margin="0,3,3,3" Visibility="Visible" ValueChanged="ClassNumericUpDown_ValueChanged"/>
+                
+                <Label x:Name="repetitionsLabel" Content="Repetitions:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"  Visibility="Hidden"/>
+                <local:NumericUpDown x:Name="repetitionsNumericUpDown" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="1000" Value="10" Margin="0,3,3,3"  Visibility="Hidden"/>
+
+                <Label x:Name="windowsCountLabel" Content="Windows:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"  Visibility="Hidden"/>
+                <local:NumericUpDown x:Name="windowsCountNumericUpDown" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1000" Minimum="1" Maximum="10000000" Value="10000" Margin="0,3,3,3"  Visibility="Hidden"/>
+                <Label x:Name="probabilityLabel" Visibility="Hidden" Content="Probability:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10" />
+                <local:NumericUpDown x:Name="probabilityNumericUpDown" Visibility="Hidden" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10"  Minimum="0" Maximum="1" DecimalPlaces="4" Value="0.0500" Increment="0.05" Margin="0,3,3,3"/>
+                <Label x:Name="scalesRatioLabel" Content="Scaling ratio:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"  Visibility="Hidden"/>
+                <local:NumericUpDown x:Name="scalesRatioNumericUpDown" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.05" Minimum="0.5" Maximum="2" Value="1.2" Margin="0,3,3,3"  Visibility="Hidden"/>
+                <Label x:Name="jumpingRatioLabel" Content="Jumping ratio:" Visibility="Hidden" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="jumpingRatioNumericUpDown" Visibility="Hidden" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.05" Minimum="0.01" Maximum="10" Value="0.05" Margin="0,3,3,3"/>
+                <Label x:Name="rescaleLabel" Content="Rescale height:" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10" Visibility="Hidden"/>
+                <CheckBox x:Name="rescaleCheckBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Content="Rescale h:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" IsChecked="True" FontSize="10" Visibility="Hidden"/>
+                <local:NumericUpDown x:Name="rescaleNumericUpDown" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="200" Maximum="10000" Value="480" Margin="0,3,3,3" Visibility="Hidden"/>
+                <CheckBox x:Name="randomModeCheckBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Uniform Scale Distribtuion" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" FontSize="10" Visibility="Hidden"/>
+                <Label x:Name="marginLabel" Content="Pos. intersec.:" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10" Visibility="Hidden"/>
+                <local:NumericUpDown x:Name="marginNumericUpDown" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.1" Minimum="0" Maximum="0.5" Value="0.1" Margin="0,3,3,3" Visibility="Hidden"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Save Settings:" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="11" FontWeight="Bold" Grid.Row="3" Grid.Column="5" Margin="0, 5, 5,0" Height="70">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <RadioButton x:Name="extractionOverwriteRadioButton" IsChecked="True" Content="Overwrite" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="1"/>
+                <RadioButton x:Name="extractionAppendRadioButton" Content="Append" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="2"/>
+            </Grid>
+        </GroupBox>
+        <local:FeatureSelector x:Name="extractorSettings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0, 5, 0, 0" IsForDetection="True"/>
+        <TextBox x:Name="statisticTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.ColumnSpan="6" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,0,0,0" FontSize="11" Background="#FFE4E4E4"/>
+        <Button x:Name="extractionButton" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="ExtractionButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/extract24.png"/>
+                    <TextBlock Text="Extract Features" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.ClassifierDetectionTimeTester"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wf="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"  
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200" Background="White">
+    <Grid x:Name="detectionGrid" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Classifier:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <TextBox x:Name="detectionClassifierPathTextBox" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="selectClassifierButton" Grid.Column="5" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Margin="0,2,0,0" Click="SelectClassifierButton_Click"  >
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Label Content="Image:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11" Grid.Row="1"/>
+        <TextBox x:Name="imagePathTextBox" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="selectImageButton" Grid.Column="5" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,2,0,0" Click="SelectImageButton_Click"  >
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <local:FeatureSelector x:Name="detectionExtractorSettings" HorizontalAlignment="Left" Width="495"  VerticalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" IsForDetection="True" Margin="0, 5, 3, 0" CheckedChanged="DetectionExtractorSettings_CheckedChanged" ValueChanged="DetectionExtractorSettings_ValueChanged" />
+        <GroupBox Header="Detection Settings:" Margin="0,5,3 5" FontSize="11" FontWeight="Bold"  Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Minimal width:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="minWidthNumericUpDown" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="40" Maximum="1000000" Value="48" Margin="0,3,3,3" ValueChanged="MinWidthNumericUpDown_ValueChanged"/>
+                <Label Content="Minimal height:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="minHeightNumericUpDown" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="40" Maximum="1000000" Value="48" Margin="0,3,3,3"/>
+                <Label Content="Scales:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="scalesNumericUpDown" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="30" Value="5" Margin="0,3,3,3"  ValueChanged="ScalesNumericUpDown_ValueChanged"/>
+                <Label Content="Scaling ratio:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="scalesRatioNumericUpDown" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.05" Minimum="0.5" Maximum="2" Value="1.2" Margin="0,3,3,3" ValueChanged="ScalesRatioNumericUpDown_ValueChanged"/>
+                <Label Content="Jumping ratio:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="jumpingRatioNumericUpDown" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.05" Minimum="0.01" Maximum="10" Value="0.05" Margin="0,3,3,3"/>
+                <Label Content="Repetitions:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="repetitionsNumericUpDown" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="99999999" Value="100" Margin="0,3,3,3"/>
+                <Label Content="Image size:" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Bold" FontSize="10"/>
+                <Label x:Name="imageSizeLabel" Content="0 x 0" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Bold" FontSize="10"/>
+                <Label Content="Windows:" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Bold" FontSize="10"/>
+                <Label x:Name="windowsCountLabel" Content="0 " HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="3" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Bold" FontSize="10"/>
+            </Grid>
+        </GroupBox>
+        <Grid x:Name="imageGrid" Grid.ColumnSpan="4" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox x:Name="imageGroupBox" Header="Image:" Margin="0,3,3 3" FontSize="11" FontWeight="Bold" >
+                <Grid x:Name="originalImageGrid"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                    <Image x:Name="imagePictureBox"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Result:" Margin="3,3,0 3" Grid.Column="1" FontSize="11" FontWeight="Bold" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="timeDataGridView" HorizontalAlignment="Stretch" Margin="3,3,3,3" VerticalAlignment="Stretch" FontWeight="Bold" IsReadOnly="True" ClipboardCopyMode="IncludeHeader" AlternationCount="2" AlternatingRowBackground="WhiteSmoke">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" ClipboardContentBinding="{Binding Path=Name}" FontWeight="Bold" FontSize="12" Header="Iteration" Width="80"/>
+                            <DataGridTextColumn x:Name="timePerFrameColumn" Binding="{Binding Path=TimeFrame}" ClipboardContentBinding="{Binding Path=TimeFrame}" FontWeight="Bold" FontSize="12" Header="Time Per Frame [ms]" Width="*"/>
+                            <DataGridTextColumn x:Name="timePerWindowColumn" Binding="{Binding Path=TimeWindow}" ClipboardContentBinding="{Binding Path=TimeWindow}" FontWeight="Bold" FontSize="12" Header="Time Per Window [ns]" Width="*"/>
+                            <DataGridTextColumn x:Name="fpsColumn" Binding="{Binding Path=FPS}" ClipboardContentBinding="{Binding Path=FPS}" FontWeight="Bold" FontSize="12" Header="FPS" Width="*"/>
+                            <DataGridTextColumn x:Name="wpsColumn" Binding="{Binding Path=WPS}" ClipboardContentBinding="{Binding Path=WPS}" FontWeight="Bold" FontSize="12" Header="WPS" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GridSplitter Grid.Column="0" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Height="6" ResizeDirection="Rows"/>
+                    <WindowsFormsHost x:Name="ChartHost" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" Margin="3,3,3,3">
+                        <wf:Chart x:Name="timeChart" Dock="Fill"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Button x:Name="timeTestButton" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="TimeTestButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/detection24.png"/>
+                    <TextBlock Text="Start Test" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

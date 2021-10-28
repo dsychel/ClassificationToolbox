@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.ZernikeComparsionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wf="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"  
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200" Background="White">
+    <Grid x:Name="detectionGrid" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Image:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <TextBox x:Name="imagePathTextBox" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="selectImageButton" Grid.Column="2" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Margin="0,2,0,0" Click="SelectImageButton_Click"  >
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <GroupBox Header="Comparison Settings:" FontSize="11" FontWeight="Bold" Grid.Row="1" Grid.ColumnSpan="2"  Width="520" Grid.Column="0" HorizontalAlignment="Left">
+            <Grid x:Name="mainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition MinWidth="70" MaxWidth="80" Width="80*"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition MinWidth="70" MaxWidth="80" Width="80*"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition MinWidth="70" MaxWidth="80" Width="80*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Harmonic (''p''):" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" FontSize="10"/>
+                <Label Content="Degree (''q''):" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Label Content="Rings (''r''):" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Label Content="Rings type (''rt''):" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Label Content="Width (''d''):" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Label Content="Window size:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Label Content="Threshold:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="4" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="pNumericUpDown" Grid.Column="1"  Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="20" Value="8" Margin="0,3,3,3" Tag="p"/>
+                <local:NumericUpDown x:Name="qNumericUpDown" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="20" Value="8" Margin="0,3,3,3" Tag="q"/>
+                <local:NumericUpDown x:Name="rNumericUpDown" Grid.Column="1"  Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="20" Value="6" Margin="0,3,3,3" Tag="r"/>
+                <local:NumericUpDown x:Name="rtNumericUpDown" Grid.Column="3"  Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="0" Maximum="1" Value="1" Margin="0,3,3,3" Tag="rt" />
+                <local:NumericUpDown x:Name="dNumericUpDown" Grid.Column="3"  Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="10" Minimum="40" Maximum="1000000" Value="100" Margin="0,3,3,3" Tag="d" />
+                <local:NumericUpDown x:Name="sizeNumericUpDown" Grid.Column="3"  Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="10" Minimum="40" Maximum="1000000" Value="68" Margin="0,3,3,3" Tag="w" ValueChanged="sizeNumericUpDown_ValueChanged"/>
+                <local:NumericUpDown x:Name="thrNumericUpDown" Grid.Column="5"  Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="4" Increment="0.1" Minimum="0" Maximum="1" Value="0.25" Margin="0,3,3,3" Tag="d" />
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="imageGroupBox" Header="Result:" Margin="0,3,3 3" FontSize="11" FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="3">
+            <Grid x:Name="originalImageGrid"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Image</Label>
+                <Label Grid.Column="1">Zernike vs Zernike II</Label>
+                <Label Grid.Column="2">Zernike vs Zernike FPII</Label>
+                <Image x:Name="originalImagePictureBox" Grid.Row="1" Grid.Column="0"/>
+                <Image x:Name="zernikeIIImagePictureBox" Grid.Row="1"  Grid.Column="1"/>
+                <Image x:Name="zernikeFPIIImagePictureBox" Grid.Row="1"  Grid.Column="2"/>
+                <Grid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="22"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="22"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Features with Errors</Label>
+                    <Rectangle x:Name="minMarker" Fill="Black" Stroke="Gray" Grid.Column="1" Margin="2"/>
+                    <Rectangle x:Name="maxMarker" Fill="White" Stroke="Gray" Grid.Column="3" Margin="2"/>
+                    <Label x:Name="minValueLabel" Grid.Column="2">0 Features</Label>
+                    <Label x:Name="maxValueLabel" Grid.Column="4">0 Features</Label>
+                </Grid>
+                <TextBox x:Name="matlabCodeTextBox" IsReadOnly="True" Grid.Row="4" Grid.ColumnSpan="3">Matlab Code:</TextBox>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="compareButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="CompareButton_Click" Width="150">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/detection24.png"/>
+                    <TextBlock Text="Compare Extractors" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

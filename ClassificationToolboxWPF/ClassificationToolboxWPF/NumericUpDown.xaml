@@ -1,0 +1,53 @@
+﻿<UserControl x:Name="numericUpDown" x:Class="ClassificationToolboxWPF.NumericUpDown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="NumericUpDown_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="12"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="numberTextBox" 
+                 x:FieldModifier="private"
+                 HorizontalAlignment="Stretch" 
+                 VerticalAlignment="Stretch" 
+                 Grid.RowSpan="2"  
+                 Text="{Binding Value, ElementName=numericUpDown}"
+                 HorizontalContentAlignment="{Binding HorizontalTextAligment, ElementName=numericUpDown}" 
+                 VerticalContentAlignment="{Binding VerticalTextAligment, ElementName=numericUpDown}"  
+                 KeyDown="NumberTextBox_KeyDown" 
+                 KeyUp="NumberTextBox_KeyUp" 
+                 LostKeyboardFocus="NumberTextBox_LostKeyboardFocus"/>
+        <Button x:Name="upButton" 
+                x:FieldModifier="private"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch" 
+                Grid.Column="1" 
+                Grid.Row="0" 
+                Click="UpButton_Click">
+            <Button.Content>
+                <Image Width="7" Height="4" Source="Images/upArrowSmall.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="downButton" 
+                x:FieldModifier="private" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch" 
+                Grid.Column="1" 
+                Grid.Row="1" 
+                Click="DownButton_Click">
+            <Button.Content>
+                <Image Width="7" Height="4" Source="Images/downArrowSmall.png"/>
+            </Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

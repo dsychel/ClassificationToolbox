@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A3514F3A-A616-4B04-8838-3C3CC6AFCD1A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ClassificationToolboxWPF</RootNamespace>
+    <AssemblyName>ClassificationToolboxWPF</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>classificationToolbox.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.World">
+      <HintPath>.\Emgu.CV.World.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BatchClassifierTester.xaml.cs">
+      <DependentUpon>BatchClassifierTester.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BatchDetectionControl.xaml.cs">
+      <DependentUpon>BatchDetectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BatchDetectionResultParser.xaml.cs">
+      <DependentUpon>BatchDetectionResultParser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BatchFeatureExtractor.xaml.cs">
+      <DependentUpon>BatchFeatureExtractor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BatchSamplesCropper.xaml.cs">
+      <DependentUpon>BatchSamplesCropper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassifierBatchDetectionTimeTester.xaml.cs">
+      <DependentUpon>ClassifierBatchDetectionTimeTester.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassifierDetectionTimeTester.xaml.cs">
+      <DependentUpon>ClassifierDetectionTimeTester.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassifierSelector.xaml.cs">
+      <DependentUpon>ClassifierSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassifierTester.xaml.cs">
+      <DependentUpon>ClassifierTester.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassifierTrainer.xaml.cs">
+      <DependentUpon>ClassifierTrainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DetectionControl.xaml.cs">
+      <DependentUpon>DetectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureExtractor.xaml.cs">
+      <DependentUpon>FeatureExtractor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureExtractorImages.xaml.cs">
+      <DependentUpon>FeatureExtractorImages.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureSelector.xaml.cs">
+      <DependentUpon>FeatureSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureSelectorWindow.xaml.cs">
+      <DependentUpon>FeatureSelectorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeaturesPostprocessor.xaml.cs">
+      <DependentUpon>FeaturesPostprocessor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeaturesViewer.xaml.cs">
+      <DependentUpon>FeaturesViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImagePreviewer.xaml.cs">
+      <DependentUpon>ImagePreviewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Loger.xaml.cs">
+      <DependentUpon>Loger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ParallelitySettings.xaml.cs">
+      <DependentUpon>ParallelitySettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SamplePreviewer.xaml.cs">
+      <DependentUpon>SamplePreviewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SamplesCropper.xaml.cs">
+      <DependentUpon>SamplesCropper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShutdownDialog.xaml.cs">
+      <DependentUpon>ShutdownDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZernikeComparsionControl.xaml.cs">
+      <DependentUpon>ZernikeComparsionControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="BatchClassifierTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BatchDetectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BatchDetectionResultParser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BatchFeatureExtractor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BatchSamplesCropper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClassifierBatchDetectionTimeTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClassifierDetectionTimeTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClassifierSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClassifierTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClassifierTrainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DetectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeatureExtractor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeatureExtractorImages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeatureSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeatureSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeaturesPostprocessor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeaturesViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GrayscaleConverter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImageFileTypeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImagePreviewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Loger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EventArgs.cs" />
+    <Compile Include="GlobalFunctions.cs" />
+    <Compile Include="GrayscaleConverter.xaml.cs">
+      <DependentUpon>GrayscaleConverter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImageFileTypeSelector.xaml.cs">
+      <DependentUpon>ImageFileTypeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="NumericUpDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ParallelitySettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SamplePreviewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SamplesCropper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShutdownDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ZernikeComparsionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="classificationToolbox.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\log16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conversion48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\extract48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conversion32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\preview32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\crop32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\browse20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conversion24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\downArrowSmall.png" />
+    <Resource Include="Images\upArrowSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\nextArrow21.png" />
+    <Resource Include="Images\previousArrow21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\previousArrowLarge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\nextArrowLarge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\restore16.png" />
+    <Resource Include="Images\settings16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\log24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\log48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\parallelitySettings.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\crop24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\stop16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\restart16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\detection32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\postprocessing32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\clear24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\extract24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\remove24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\support48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\detection48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\train48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\preview32_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\mdetection32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\prescreeaner32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\extract32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\results32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WI_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\load16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\unload16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add32.png" />
+    <Resource Include="Images\clear32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\remove32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\train24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\error.png" />
+    <Resource Include="Images\pending.png" />
+    <Resource Include="Images\successful.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\results24.png" />
+    <Resource Include="Images\threshold24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\image16.png" />
+    <Resource Include="Images\image20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\left.png" />
+    <Resource Include="Images\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\detection24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\detection.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cvextern.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\batchExtract24.png" />
+    <Resource Include="Images\mdetection24.png" />
+    <Resource Include="Images\batchExtract32.png" />
+    <Resource Include="Images\batchCrop24.png" />
+    <Resource Include="Images\batchCrop32.png" />
+    <Resource Include="Images\saveImage24.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

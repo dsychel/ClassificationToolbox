@@ -1,0 +1,187 @@
+﻿<UserControl x:Class="ClassificationToolboxWPF.BatchDetectionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"          
+             xmlns:wf="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"  
+             xmlns:local="clr-namespace:ClassificationToolboxWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200" Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="330"/>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Classifier:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <TextBox x:Name="multipleImageClassifierTextBox" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="multipleImageSelectClassifierButton" Grid.Column="5" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" Margin="0,2,0,0" Click="MultipleImageSelectClassifierButton_Click"  >
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Label Content="Images:" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <TextBox x:Name="multipleImageImagesTextBox" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="multipleImageSelectImagesButton" Grid.Column="5" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,2,0,0" Click="MultipleImageSelectImagesButton_Click"  >
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <Label Content="Save In:" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="11"/>
+        <TextBox x:Name="multipleImageSaveInTextBox" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" IsReadOnly="True" Text="" Margin="3,2,3,0" FontSize="11" FontWeight="Bold" Background="#FFE4E4E4"/>
+        <Button x:Name="multipleImageSaveInButton" Grid.Column="5" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Margin="0,2,0,0" Click="MultipleImageSaveInButton_Click"  >
+            <Button.Content>
+                <Image Width="20" Height="20" Source="Images/browse20.png"/>
+            </Button.Content>
+        </Button>
+        <local:FeatureSelector x:Name="multipleImageExtractorSettings" HorizontalAlignment="Left" Width="495" VerticalAlignment="Stretch" Grid.Row="3" Grid.ColumnSpan="2" IsForDetection="True" Margin="0, 5, 3, 0" CheckedChanged="MultipleImageExtractorSettings_CheckedChanged" ValueChanged="MultipleImageExtractorSettings_ValueChanged"/>
+        <GroupBox Header="Detection Settings:" Margin="0,5,3 5" FontSize="11" FontWeight="Bold"  Grid.Row="3" Grid.Column="2">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Minimal width:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageMinWidthNumericUpDown" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="40" Maximum="1000000" Value="48" Margin="0,3,3,3" ValueChanged="MultipleImageMinWidthNumericUpDown_ValueChanged"/>
+                <Label Content="Minimal height:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageMinHeightNumericUpDown" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="40" Maximum="1000000" Value="48" Margin="0,0,3,3" Height="19"/>
+                <Label Content="Scales:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageScalesNumericUpDown" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="0" Increment="1" Minimum="1" Maximum="30" Value="5" Margin="0,3,3,3" ValueChanged="MultipleImageScalingRatioNumericUpDown_ValueChanged"/>
+                <Label Content="Scaling ratio:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageScalingRatioNumericUpDown" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.05" Minimum="0.5" Maximum="2" Value="1.2" Margin="0,3,3,3" ValueChanged="MultipleImageScalingRatioNumericUpDown_ValueChanged"/>
+                <Label Content="Jumping ratio:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageJumpingRatioNumericUpDown" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.05" Minimum="0.01" Maximum="10" Value="0.05" Margin="0,3,3,3"/>
+                <Label Content="Min Jaccard:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageMinJackardNumericUpDown" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.01" Minimum="0" Maximum="1" Value="0.4" Margin="0,3,3,3"/>
+                <Label Content="Image count:" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Bold" FontSize="10"/>
+                <Label x:Name="imageCountLabel" Content="0" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Bold" FontSize="10"/>
+                <CheckBox x:Name="saveOutputImageCheckBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Content="Save Output Images" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="False" VerticalAlignment="Center" Margin="0,0,0,1"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Windows Grouping Settings:" Margin="0,5,3 5" FontSize="11" FontWeight="Bold"  Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+            <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Mode:" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Label Content="Min Jaccad:" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center"  FontWeight="Normal" FontSize="10"/>
+                <Grid Grid.Column="1" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton x:Name="multipleImageWindowsSumModeRadioButton" Grid.Column="0" Content="Sum" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal"/>
+                    <RadioButton x:Name="multipleImageWindowsAverageModeRadioButton" Grid.Column="1" Content="Av. F" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" IsChecked="False"/>
+                    <RadioButton x:Name="multipleImageWindowsAverageSlowModeRadioButton" Grid.Column="2" Content="Av. S" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Normal" IsChecked="True"/>
+                </Grid>
+                <local:NumericUpDown x:Name="multipleImageMinJackardGroupingNumericUpDown" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="0.01" Minimum="0" Maximum="1" Value="0.4" Margin="0,3,3,3"/>
+                <Label Content="Threshold range:" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Normal" FontSize="10"/>
+                <local:NumericUpDown x:Name="multipleImageMinThresholdNumericUpDown" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="1" Minimum="-10000" Maximum="10000" Value="0" Margin="0,3,3,3" ValueChanged="MultipleImageMinThresholdNumericUpDown_ValueChanged"/>
+                <local:NumericUpDown x:Name="multipleImageStepThresholdNumericUpDown" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="1" Minimum="0.01" Maximum="10000" Value="1" Margin="0,3,3,3"/>
+                <local:NumericUpDown x:Name="multipleImageMaxThresholdNumericUpDown" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalTextAligment="Center" HorizontalTextAligment="Right" FontWeight="Normal" FontSize="10" DecimalPlaces="2" Increment="1" Minimum="-10000" Maximum="10000" Value="0" Margin="0,3,3,3" ValueChanged="MultipleImageMaxThresholdNumericUpDown_ValueChanged"/>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="4" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="460"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Results" Margin="0,0,3 0" FontSize="11" FontWeight="Bold" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="multipleImagesConfusionDataGridView" HorizontalAlignment="Stretch" Grid.ColumnSpan="5" Grid.Row="0" Margin="0,0,0,3" VerticalAlignment="Stretch" FontWeight="Bold" IsReadOnly="True" ClipboardCopyMode="IncludeHeader" AlternationCount="2" AlternatingRowBackground="WhiteSmoke">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="headerColumn" Binding="{Binding Path=RowHeader}" ClipboardContentBinding="{Binding Path=RowHeader}" FontWeight="Bold" FontSize="12" Header="" Width="140"/>
+                            <DataGridTextColumn x:Name="negativesColumn" Binding="{Binding Path=N}" ClipboardContentBinding="{Binding Path=N}" FontWeight="Bold" FontSize="12" Header="Negatives" Width="100"/>
+                            <DataGridTextColumn x:Name="positivesColumn" Binding="{Binding Path=T}" ClipboardContentBinding="{Binding Path=T}" FontWeight="Bold" FontSize="12" Header="Positives" Width="100"/>
+                            <DataGridTextColumn x:Name="sumColumn" Binding="{Binding Path=Sum}" ClipboardContentBinding="{Binding Path=Sum}" FontWeight="Bold" FontSize="12" Header="" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid x:Name="multipleImagesMetricesDataGridView" Grid.Row="1" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="Bold" IsReadOnly="True" ClipboardCopyMode="IncludeHeader" AlternationCount="2" AlternatingRowBackground="WhiteSmoke">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" ClipboardContentBinding="{Binding Path=Name}" FontWeight="Bold" FontSize="12" Header="Metrices" Width="200"/>
+                            <DataGridTextColumn x:Name="valueColumn" Binding="{Binding Path=Value, StringFormat={}{0:0.0000########}}" ClipboardContentBinding="{Binding Path=Value}" FontWeight="Bold" FontSize="12" Header="Values" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="prevThrButton" IsEnabled="True" Grid.Column="0"  HorizontalAlignment="Stretch" Grid.Row="4" Margin="0,2,0,0" VerticalAlignment="Stretch" Click="PrevThrButton_Click">
+                        <Button.Content>
+                            <Image Width="16" Height="16" Source="Images/left.png"/>
+                        </Button.Content>
+                    </Button>
+                    <TextBox x:Name="currentThrTextBox" IsReadOnly="True" TextAlignment="Center" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FontWeight="Normal" FontSize="10"  Margin="0,2,0,0" />
+                    <Button x:Name="nextThrButton" IsEnabled="True" Grid.Column="4"  HorizontalAlignment="Stretch" Grid.Row="4" Margin="0,2,0,0" VerticalAlignment="Stretch" Click="NextThrbutton_Click">
+                        <Button.Content>
+                            <Image Width="14" Height="14" Source="Images/right.png"/>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Chart" Margin="0,0,3 0" FontSize="11" FontWeight="Bold" Grid.Column="1" >
+                <Grid>
+                    <WindowsFormsHost x:Name="ChartHost" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                        <wf:Chart x:Name="ROCchart" Dock="Fill"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Button x:Name="multipleImageDetectionButton" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch" Margin="0,3,0,1" Click="MultipleImageDetectionButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="145">
+                    <Image Width="24" Height="24" Source="Images/mdetection24.png"/>
+                    <TextBlock Text="Detect Object" Foreground="Black" FontWeight="Bold" FontSize="11" HorizontalAlignment=" Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Grid Grid.Row= "5" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox x:Name="saveFPCheckBox" Grid.Column ="0" Grid.ColumnSpan="1" Content="Save FP Windows (Thr = 0.0)" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="False" VerticalAlignment="Bottom" Margin="0,0,0,1"/>
+            <CheckBox x:Name="resizeImages" Grid.Column ="1" Grid.ColumnSpan="1" Content="Resize images (Height):" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="False" VerticalAlignment="Bottom" Margin="5,0,0,1"/>
+            <local:NumericUpDown x:Name="widthToRescale" Grid.Column ="2" Grid.ColumnSpan="1" Value="480" Minimum="100" Maximum="1000" Increment="20" DecimalPlaces="0" FontSize="11" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,0,1"/>
+            <CheckBox x:Name="ignoreOverUnderSizePositives" Grid.Column ="3" Grid.ColumnSpan="1" Content="Ignore UOS Windows" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsChecked="False" VerticalAlignment="Bottom" Margin="5,0,0,1"/>
+        </Grid>
+        
+    </Grid>
+</UserControl>
